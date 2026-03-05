@@ -1,0 +1,44 @@
+﻿<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GodotPath>Z:\Projects\sts2\megadot\MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
+    <SteamLibraryPath>C:\Program Files (x86)\Steam\steamapps</SteamLibraryPath>
+    <Sts2Path>$(SteamLibraryPath)\common\Slay the Spire 2</Sts2Path>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="mod_manifest.json" />
+    <Content Include="project.godot" />
+    <Content Include="images\packed\card_portraits\ironclad\test_card.png" />
+    <Content Include="Notes.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>$(Sts2Path)\data_sts2_windows_x86_64\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="sts2">
+      <HintPath>$(Sts2Path)\data_sts2_windows_x86_64\sts2.dll</HintPath>
+      <Publicize>true</Publicize>
+    </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <Target Name="GodotPrePublish" BeforeTargets="Publish">
+    <Message Text="Exporting Godot .pck..." Importance="high" />
+    <Exec Command="$(GodotPath) --headless --export-pack &quot;Windows Desktop&quot; $(PublishDir)\$(MSBuildProjectName).pck" ContinueOnError="WarnAndContinue" />
+  </Target>
+  <Target Name="CopyToModsFolder" AfterTargets="Publish">
+    <Message Text="Copying .pck and .dll to mods folder." Importance="high" />
+    <Copy SourceFiles="$(PublishDir)\$(MSBuildProjectName).pck" DestinationFolder="$(Sts2Path)\mods\" />
+    <Copy SourceFiles="$(PublishDir)\$(MSBuildProjectName).dll" DestinationFolder="$(Sts2Path)\mods\" />
+  </Target>
+</Project>

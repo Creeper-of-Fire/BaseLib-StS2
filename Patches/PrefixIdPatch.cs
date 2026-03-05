@@ -1,0 +1,23 @@
+using Basis.Abstracts;
+using Basis.Extensions;
+using HarmonyLib;
+using MegaCrit.Sts2.Core.Models;
+using System;
+
+namespace Basis.Patches;
+
+[HarmonyPatch(typeof(ModelDb), nameof(ModelDb.GetEntry))]
+public class PrefixIdPatch
+{
+
+    [HarmonyPostfix]
+    static string AdjustID(string __result, Type type)
+    {
+        if (type.IsAssignableTo(typeof(ICustomModel)))
+        {
+            //MainFile.Logger.Info(s);
+            return type.GetPrefix() + __result;
+        }
+        return __result;
+    }
+}
