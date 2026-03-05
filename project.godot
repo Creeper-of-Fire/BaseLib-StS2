@@ -10,13 +10,13 @@ config_version=5
 
 [application]
 
-config/name="Basis"
+config/name="BaseMod2"
 config/features=PackedStringArray("4.5", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [dotnet]
 
-project/assembly_name="Basis"
+project/assembly_name="BaseMod2"
 
 [rendering]
 

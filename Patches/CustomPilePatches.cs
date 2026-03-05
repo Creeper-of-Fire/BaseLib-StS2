@@ -1,7 +1,7 @@
-using Basis.Abstracts;
-using Basis.Extensions;
-using Basis.Utils;
-using Basis.Utils.Patching;
+using BaseMod2.Abstracts;
+using BaseMod2.Extensions;
+using BaseMod2.Utils;
+using BaseMod2.Utils.Patching;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
-namespace Basis.Patches;
+namespace BaseMod2.Patches;
 
 
 public class CustomPiles
@@ -69,7 +69,7 @@ public class CustomPiles
     {
         if (!CustomPileProviders.ContainsKey(pileType)) return null;
 
-        Basis.Logger.Info("Looking for NCard in Custom Pile!");
+        BaseMod.Logger.Info("Looking for NCard in Custom Pile!");
         CustomPile pile = GetCustomPile(card.Owner.PlayerCombatState, pileType);
 
         return pile.GetNCard(card);

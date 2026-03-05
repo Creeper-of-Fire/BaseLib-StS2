@@ -1,6 +1,6 @@
-using Basis.Abstracts;
-using Basis.Utils;
-using Basis.Utils.Patching;
+using BaseMod2.Abstracts;
+using BaseMod2.Utils;
+using BaseMod2.Utils.Patching;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
@@ -15,7 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Basis.Patches.UI;
+namespace BaseMod2.Patches.UI;
 
 [HarmonyPatch(typeof(NCardLibrary), nameof(NCardLibrary._Ready))]
 public class CustomPoolFilters

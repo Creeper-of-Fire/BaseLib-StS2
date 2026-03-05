@@ -1,4 +1,4 @@
-namespace Basis.Abstracts;
+namespace BaseMod2.Abstracts;
 
 /// <summary>
 /// Checked in PrefixIdPatch to determine if a prefix should be added.

@@ -1,15 +1,15 @@
 using System;
 using System.Runtime.InteropServices;
-using Basis.Patches;
+using BaseMod2.Patches;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 
-namespace Basis;
+namespace BaseMod2;
 
 [ModInitializer(nameof(Initialize))]
-public static class Basis
+public static class BaseMod
 {
-    public const string ModId = "Basis";
+    public const string ModId = "BaseMod2";
 
     public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } = new(ModId, MegaCrit.Sts2.Core.Logging.LogType.Generic);
 

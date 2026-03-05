@@ -1,5 +1,5 @@
-using Basis.Abstracts;
-using Basis.Utils;
+using BaseMod2.Abstracts;
+using BaseMod2.Utils;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Basis.Patches;
+namespace BaseMod2.Patches;
 
 [HarmonyPatch(typeof(ModelDb), nameof(ModelDb.InitIds))]
 public static class CustomContentDictionary
@@ -54,7 +54,7 @@ public static class CustomContentDictionary
     [HarmonyPostfix]
     static void ConvertTypesToModels()
     {
-        Basis.Logger.Info($"Custom Models: {_customTypes.Count}");
+        BaseMod.Logger.Info($"Custom Models: {_customTypes.Count}");
     }
 }
 

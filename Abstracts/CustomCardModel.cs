@@ -1,4 +1,4 @@
-using Basis.Patches;
+using BaseMod2.Patches;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using System.Linq;
 
-namespace Basis.Abstracts;
+namespace BaseMod2.Abstracts;
 
 public abstract class CustomCardModel : CardModel, ICustomModel
 {

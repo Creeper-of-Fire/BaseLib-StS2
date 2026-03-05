@@ -1,10 +1,10 @@
-using Basis.Patches;
+using BaseMod2.Patches;
 using HarmonyLib;
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Basis.Extensions;
+namespace BaseMod2.Extensions;
 
 public static class StringExtensions
 {

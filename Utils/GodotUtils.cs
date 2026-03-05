@@ -3,7 +3,7 @@ using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using System.Collections.Generic;
 
-namespace Basis.Utils;
+namespace BaseMod2.Utils;
 
 public static class GodotUtils
 {
@@ -37,7 +37,7 @@ public static class GodotUtils
 
         if (requiredNames.Count > 0)
         {
-            Basis.Logger.Warn($"Created {target.GetType().FullName} missing required children {string.Join(" ", requiredNames)}");
+            BaseMod.Logger.Warn($"Created {target.GetType().FullName} missing required children {string.Join(" ", requiredNames)}");
         }
 
         source.QueueFree();

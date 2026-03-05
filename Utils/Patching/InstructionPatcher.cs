@@ -1,4 +1,4 @@
-using Basis.Extensions;
+using BaseMod2.Extensions;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 
-namespace Basis.Utils.Patching;
+namespace BaseMod2.Utils.Patching;
 
 public class InstructionPatcher(IEnumerable<CodeInstruction> instructions)
 {

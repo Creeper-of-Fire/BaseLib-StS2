@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Basis.Utils;
+namespace BaseMod2.Utils;
 
 /// <summary>
 /// A basic wrapper around <seealso cref="ConditionalWeakTable{TKey, TValue}"/> for convenience.

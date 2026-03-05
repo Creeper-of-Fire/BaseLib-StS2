@@ -1,7 +1,7 @@
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 
-namespace Basis.Abstracts;
+namespace BaseMod2.Abstracts;
 
 public abstract class CustomPowerModel : PowerModel, ICustomModel
 {

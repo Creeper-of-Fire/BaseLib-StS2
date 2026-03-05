@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Basis.Extensions;
+namespace BaseMod2.Extensions;
 
 public static class TypeExtensions
 {

@@ -1,7 +1,7 @@
 using HarmonyLib;
 using System.Collections.Generic;
 
-namespace Basis.Utils.Patching;
+namespace BaseMod2.Utils.Patching;
 
 public interface IMatcher
 {

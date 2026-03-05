@@ -1,11 +1,11 @@
-using Basis.Patches;
+using BaseMod2.Patches;
 using MegaCrit.Sts2.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Basis.Utils;
+namespace BaseMod2.Utils;
 
 /// <summary>
 /// Used to automatically register models to be added to pools (or to find types in certain namespaces for other purposes).

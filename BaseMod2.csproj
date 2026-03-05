@@ -14,6 +14,7 @@
     <Content Include="mod_manifest.json" />
     <Content Include="project.godot" />
     <Content Include="Notes.txt" />
+    <Content Include="BaseMod2\mod_image.png" />
   </ItemGroup>
 
   <ItemGroup>

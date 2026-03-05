@@ -1,6 +1,6 @@
 using System;
 
-namespace Basis.Extensions;
+namespace BaseMod2.Extensions;
 
 public static class TypePrefix
 {

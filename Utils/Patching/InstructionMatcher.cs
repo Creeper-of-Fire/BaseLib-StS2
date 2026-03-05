@@ -1,11 +1,11 @@
-using Basis.Extensions;
+using BaseMod2.Extensions;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Basis.Utils.Patching;
+namespace BaseMod2.Utils.Patching;
 
 /// <summary>
 /// Matches a consecutive list of instructions, requiring a matching opcode and operand.

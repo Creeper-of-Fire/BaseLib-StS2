@@ -1,9 +1,9 @@
-using Basis.Abstracts;
+using BaseMod2.Abstracts;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 
-namespace Basis.Patches;
+namespace BaseMod2.Patches;
 
 [HarmonyPatch(typeof(TouchOfOrobas), nameof(TouchOfOrobas.GetUpgradedStarterRelic))]
 class StarterUpgradePatches

@@ -1,4 +1,4 @@
-using Basis.Utils;
+using BaseMod2.Utils;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using System.Collections.Generic;
 
-namespace Basis.Abstracts;
+namespace BaseMod2.Abstracts;
 
 public abstract class CustomCharacterModel : CharacterModel, ICustomModel
 {

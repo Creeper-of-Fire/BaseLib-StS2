@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Basis.Utils;
+namespace BaseMod2.Utils;
 
 public class ShaderUtils
 {

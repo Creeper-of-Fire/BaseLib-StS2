@@ -1,7 +1,7 @@
-using Basis.Patches;
+using BaseMod2.Patches;
 using MegaCrit.Sts2.Core.Models;
 
-namespace Basis.Abstracts;
+namespace BaseMod2.Abstracts;
 
 public abstract class CustomPotionModel : PotionModel, ICustomModel
 {

@@ -1,5 +1,5 @@
-using Basis.Abstracts;
-using Basis.Extensions;
+using BaseMod2.Abstracts;
+using BaseMod2.Extensions;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Helpers;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Basis.Patches;
+namespace BaseMod2.Patches;
 
 /// <summary>
 /// Marks a field as intended to contain a new generated enum value.
@@ -78,7 +78,7 @@ public static class CustomEnums
                 }
             }
 
-            Basis.Logger.Info($"Generated KeyGenerator for enum {t.FullName} with starting value {nextKey}");
+            BaseMod.Logger.Info($"Generated KeyGenerator for enum {t.FullName} with starting value {nextKey}");
         }
 
         public object GetKey()

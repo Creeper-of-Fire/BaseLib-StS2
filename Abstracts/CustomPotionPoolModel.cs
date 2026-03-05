@@ -1,8 +1,8 @@
-using Basis.Patches;
+using BaseMod2.Patches;
 using MegaCrit.Sts2.Core.Models;
 using System.Collections.Generic;
 
-namespace Basis.Abstracts;
+namespace BaseMod2.Abstracts;
 
 public abstract class CustomPotionPoolModel : PotionPoolModel, ICustomModel
 {

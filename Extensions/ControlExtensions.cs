@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Basis.Extensions;
+namespace BaseMod2.Extensions;
 
 public static class ControlExtensions
 {

@@ -1,4 +1,4 @@
-using Basis.Utils;
+using BaseMod2.Utils;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using System;
 using System.Collections.Generic;
 
-namespace Basis.Extensions;
+namespace BaseMod2.Extensions;
 
 public static class DynamicVarExtensions
 {
