@@ -1,6 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
+using BaseLib.Config;
+using BaseLib.Config.UI;
 using BaseLib.Patches.Content;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 
@@ -16,6 +19,8 @@ public static class MainFile
     public static void Initialize()
     {
         Libgcc();
+        
+        ModConfigRegistry.Register(ModId, new BaseLibConfig());
         
         Harmony harmony = new(ModId);
 
