@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using BaseLib.Config;
+using BaseLib.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Logging;
 
@@ -33,6 +34,7 @@ public partial class NLogWindow : Window
     private bool _settingChanged;
 
     private bool _isFollowingLog = true;
+    private int _currentFontSize; // Set on load
 
     public override void _EnterTree()
     {
@@ -72,6 +74,7 @@ public partial class NLogWindow : Window
         _regexButton.ButtonPressed = BaseLibConfig.LogUseRegex;
         _inverseButton.ButtonPressed = BaseLibConfig.LogInvertFilter;
         _filterInput.Text = BaseLibConfig.LogLastFilter;
+        _currentFontSize = (int)BaseLibConfig.LogFontSize;
 
         _filterInput.TextChanged += (_) => { _settingChanged = true; UpdateFilter(); };
         _regexButton.Toggled += (_) => { _settingChanged = true; UpdateFilter(); };
@@ -86,6 +89,8 @@ public partial class NLogWindow : Window
         scrollbar.ValueChanged += OnScrollbarValueChanged;
 
         _isFollowingLog = true;
+
+        SetFontSize(_currentFontSize, false);
         UpdateFilter(); // Also calls Refresh()
     }
 
@@ -201,6 +206,29 @@ public partial class NLogWindow : Window
         if (_log.Limit == configuredLimit) return;
 
         _log.SetLimit(configuredLimit);
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is not InputEventMouseButton { CtrlPressed: true } mouseEvent) return;
+        if (mouseEvent.ButtonIndex != MouseButton.WheelUp && mouseEvent.ButtonIndex != MouseButton.WheelDown) return;
+        if (!mouseEvent.IsReleased()) return; // Don't double-count: pressed, then released
+        ChangeFontSize(mouseEvent.ButtonIndex == MouseButton.WheelUp ? 1 : -1);
+        GetViewport().SetInputAsHandled();
+    }
+
+    private void ChangeFontSize(int deltaPx) =>
+        SetFontSize((int)Mathf.Clamp(BaseLibConfig.LogFontSize + deltaPx, 8, 48));
+
+    private void SetFontSize(int newSize, bool save = true)
+    {
+        _logLabel?.AddThemeFontSizeOverrideAll(newSize);
+        _currentFontSize = newSize;
+        ScrollToBottomAsync();
+
+        if (!save) return;
+        BaseLibConfig.LogFontSize = newSize;
+        ModConfig.SaveDebounced<BaseLibConfig>();
     }
 
     private class LimitedLog : Queue<string>

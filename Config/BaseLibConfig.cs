@@ -18,6 +18,10 @@ internal class BaseLibConfig : SimpleModConfig
     [SliderLabelFormat("{0:0}")]
     public static double LimitedLogSize { get; set; } = 256;
 
+    [SliderRange(8, 48)]
+    [SliderLabelFormat("{0:0} px")]
+    public static double LogFontSize { get; set; } = 14;
+
     // Remembered, but not shown
     [ConfigHideInUI] public static int LastLogLevel { get; set; } = 3; // Default to Info
     [ConfigHideInUI] public static bool LogUseRegex { get; set; } = false;
