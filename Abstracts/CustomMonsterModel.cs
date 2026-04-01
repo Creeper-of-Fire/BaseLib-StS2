@@ -95,7 +95,7 @@ public abstract class CustomMonsterModel : MonsterModel, ICustomModel, ISceneCon
     }
 }
 
-[HarmonyPatch(typeof(MonsterModel), nameof(MonsterModel.CreateVisuals), MethodType.Getter)]
+[HarmonyPatch(typeof(MonsterModel), nameof(MonsterModel.CreateVisuals))]
 class CreateVisuals
 {
     [HarmonyPrefix]
