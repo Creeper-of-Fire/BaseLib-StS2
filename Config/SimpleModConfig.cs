@@ -267,6 +267,10 @@ public class SimpleModConfig : ModConfig
         {
             var member = filteredMembers[i];
             var nextMember = i < filteredMembers.Count - 1 ? filteredMembers[i + 1] : null;
+            
+            var visibleWhen = member.GetCustomAttribute<ConfigVisibleWhenAttribute>();
+            // Setting up the reference to the divider linked to this config so we can set its visibility
+            Control? associatedDivider = null;
 
             // Create a section header if this property starts a new section
             var sectionName = member.GetCustomAttribute<ConfigSectionAttribute>()?.Name;
@@ -287,6 +291,31 @@ public class SimpleModConfig : ModConfig
                     _ => throw new UnreachableException("Invalid type that should have been filtered out")
                 };
                 targetContainer.AddChild(newRow);
+                
+                // Check for conditional visibility
+                if (visibleWhen != null)
+                {
+                    var watchedProp = GetType().GetProperty(visibleWhen.WatchedPropertyName);
+                    if (watchedProp != null)
+                    {
+                        void UpdateVisibility()
+                        {
+                            var currentVal = watchedProp.GetValue(null);
+                            var shouldBeVisible = Equals(currentVal?.ToString(), visibleWhen.ExpectedValue?.ToString());
+
+                            if (visibleWhen.Invert)
+                                shouldBeVisible = !shouldBeVisible;
+
+                            newRow.Visible = shouldBeVisible;
+                            if (associatedDivider != null)
+                                associatedDivider.Visible = shouldBeVisible;
+                        }
+                        
+                        UpdateVisibility();
+                        ConfigChanged += (_, _) => UpdateVisibility();
+                        OnConfigReloaded += UpdateVisibility;
+                    }
+                }
 
                 var previousSetting = currentSetting;
                 currentSetting = newRow.SettingControl;
@@ -311,7 +340,12 @@ public class SimpleModConfig : ModConfig
             var nextIsSameSection = nextSectionName == null || nextSectionName == currentSection;
             if (nextMember != null && nextIsSameSection)
             {
-                targetContainer.AddChild(CreateDividerControl());
+                var divider = CreateDividerControl();
+                targetContainer.AddChild(divider);
+
+                // If the row above has conditional visibility, link the divider to it
+                if (visibleWhen != null)
+                    associatedDivider = divider;
             }
         }
 
