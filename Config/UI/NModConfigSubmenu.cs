@@ -30,6 +30,7 @@ public partial class NModConfigSubmenu : NSubmenu
     private double _saveTimer = -1;
     private const double AutosaveDelay = 5;
     private bool _isUsingController;
+    private bool _lastFocusOnRight;
 
     private const float ModTitleHeight = 90f;
     private const float TopOffset = ModTitleHeight + 30f;
@@ -39,9 +40,10 @@ public partial class NModConfigSubmenu : NSubmenu
 
     private const float MaxRightSideWidth = 1200f; // Dynamically sized, but not above this (hurts UW readability)
 
-    // Default to mod list, to ensure controllers begin there; the fallbacks should never be required
+    // Read when the screen is shown *and* after a modal (e.g. confirm Restore Defaults). Ensure we return
+    // to the same side that was active prior.
     protected override Control? InitialFocusedControl =>
-        GetActiveModButton() ?? FindFirstFocusable(_optionContainer) ?? null;
+        _lastFocusOnRight ? FindFirstFocusable(_optionContainer) : GetActiveModButton();
 
     public NModConfigSubmenu()
     {
@@ -120,20 +122,11 @@ public partial class NModConfigSubmenu : NSubmenu
             var modButton = new NModListButton(modName);
             _modListVbox.AddChild(modButton);
 
-            modButton.Connect(NClickableControl.SignalName.Released, Callable.From<NModListButton>(_ =>
-            {
-                LoadModConfig(modConfig);
-
-                if (!_isUsingController) return;
-                SetBackButtonVisible(false);
-                modButton.SetHotkeyIconVisible(true);
-
-                Callable.From(() => { FindFirstFocusable(_optionContainer)?.TryGrabFocus(); })
-                  .CallDeferred();
-            }));
+            modButton.Connect(NClickableControl.SignalName.Released, Callable.From<NModListButton>(button =>
+                ModButtonClicked(button, modConfig)));
 
             modButton.Connect(NClickableControl.SignalName.Focused,
-                Callable.From<NModListButton>(_ => SetBackButtonVisible(true)));
+                Callable.From<NModListButton>(ModButtonFocused));
 
             modButton.FocusNeighborLeft = selfNodePath;
             modButton.FocusNeighborRight = selfNodePath;
@@ -168,10 +161,35 @@ public partial class NModConfigSubmenu : NSubmenu
         return null;
     }
 
+    private void ModButtonClicked(NModListButton button, ModConfig modConfig)
+    {
+        LoadModConfig(modConfig);
+
+        if (!_isUsingController) return;
+
+        SetBackButtonVisible(false);
+        button.SetHotkeyIconVisible(true);
+
+        Callable.From(() => { FindFirstFocusable(_optionContainer)?.TryGrabFocus(); })
+            .CallDeferred();
+        _lastFocusOnRight = true;
+    }
+
+    private void ModButtonFocused(NModListButton button)
+    {
+        _lastFocusOnRight = false;
+        SetBackButtonVisible(true);
+    }
+
     private void FocusModList()
     {
         SetBackButtonVisible(true);
-        GetActiveModButton()?.SetHotkeyIconVisible(false);
+
+        foreach (var modButton in _modListVbox.GetChildren())
+        {
+            if (modButton is NModListButton listButton)
+                listButton.SetHotkeyIconVisible(false);
+        }
 
         // Only relevant for controllers, but returns if a controller isn't being used
         GetActiveModButton()?.TryGrabFocus();
@@ -211,6 +229,7 @@ public partial class NModConfigSubmenu : NSubmenu
     private void InputTypeChanged()
     {
         _isUsingController = NControllerManager.Instance?.IsUsingController ?? false;
+        _lastFocusOnRight = false;
         FocusModList();
     }
 
@@ -246,6 +265,7 @@ public partial class NModConfigSubmenu : NSubmenu
         _currentConfig = config;
         config.ConfigChanged += OnConfigChanged;
         SetHighlightedModButton(config);
+        _lastFocusOnRight = false;
 
         // Recreate the container to ensure the previous mod can't change something persistent by mistake
         _optionContainer = CreateOptionContainer();
@@ -498,6 +518,11 @@ public partial class NModConfigSubmenu : NSubmenu
     public override void _ExitTree()
     {
         GetViewport().Disconnect(Viewport.SignalName.SizeChanged, Callable.From(RefreshSize));
+        NControllerManager.Instance?.Disconnect(NControllerManager.SignalName.MouseDetected,
+            Callable.From(InputTypeChanged));
+        NControllerManager.Instance?.Disconnect(NControllerManager.SignalName.ControllerDetected,
+            Callable.From(InputTypeChanged));
+
         base._ExitTree();
     }
 }
